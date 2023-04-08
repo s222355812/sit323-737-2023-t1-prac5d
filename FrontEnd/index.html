@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculator</title>
+  </head>
+  <body>
+    <form id="calculator-form">
+      <label for="n1">Number 1:</label>
+      <input type="number" name="n1" id="n1" required>
+      <br><br>
+      <label for="n2">Number 2:</label>
+      <input type="number" name="n2" id="n2" required>
+      <br><br>
+      <select name="operation" id="operation" required>
+        <option value="add">Addition</option>
+        <option value="subtract">Subtraction</option>
+        <option value="multiply">Multiplication</option>
+        <option value="divide">Division</option>
+      </select>
+      <br><br>
+      <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+    <script>
+      const form = document.getElementById('calculator-form');
+      const resultDiv = document.getElementById('result');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const n1 = parseFloat(form.n1.value);
+        const n2 = parseFloat(form.n2.value);
+        const operation = form.operation.value;
+        const token = localStorage.getItem('token');
+
+        try {
+            const response = await fetch(`http://localhost:3000/${operation}?n1=${n1}&n2=${n2}`, {
+               // const response = await fetch('http://127.0.0.3:3000/add?n1=8&n2=9',{
+  //method: 'GET', // or 'GET' depending on your server configuration
+  mode: 'cors',
+  headers: {
+    'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjgwOTYzMTI4fQ.OIZ8Ah4ZdkxSiEYD7Rdx7pNkky-VyW3PkBu6JfeZxvI`,
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin':'*',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+'Access-Control-Allow-Headers': 'Content-Type, Authorization'
+  },
+ // body: JSON.stringify(data) // replace "data" with your request body object
+
+
+            
+          });
+          const result = await response.json();
+          resultDiv.textContent = `Result: ${result.data}`;
+        } catch (error) {
+          resultDiv.textContent = error.message;
+        }
+      });
+    </script>
+  </body>
+</html>

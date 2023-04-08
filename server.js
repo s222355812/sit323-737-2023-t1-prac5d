@@ -1,6 +1,14 @@
 const express= require("express");
 const res = require("express/lib/response");
-const app= express();
+
+const cors = require('cors');
+
+const app = express();
+
+app.use(cors());
+
+// your API routes
+
 app.use(express.json());
 const jwt = require('jsonwebtoken');
 
