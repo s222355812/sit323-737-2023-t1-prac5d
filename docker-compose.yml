@@ -3,14 +3,16 @@ version: "3"
 services:
  
   api1:
-    image: prac5_737 
+    image: prac5d_737 
+    container_name: docker-node-5d
     ports:
       - "3000:3000"
     networks:
       - my-network
 
   ui:
-    image: prac5ui_737 
+    image: prac5dui_737 
+    container_name: docker-node-5dui
     ports:
       - "4200:80"
     environment:
